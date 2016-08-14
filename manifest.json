@@ -3,9 +3,6 @@
   "name": "Facebook ADS blocker",
   "version": "0.1",
   "author": "leopold.jacquot@gmail.com",
-  "background": {
-    "persistent": false
-  },
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*"],
     "js": ["content.js"]
