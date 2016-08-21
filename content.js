@@ -11,6 +11,7 @@ var adsLabels = {
     ]
 };
 var facebookLang = document.getElementsByTagName("html")[0].getAttribute("lang");
+var counterAdsPage = 0;
 
 if (adsLabels.hasOwnProperty(facebookLang) === true) {
     var observer = new MutationObserver(function (mutations, observer) {
@@ -23,6 +24,7 @@ if (adsLabels.hasOwnProperty(facebookLang) === true) {
             };
 
             if (entry.value.indexOf(adsLabels[facebookLang][0]) !== -1 || entry.value.indexOf(adsLabels[facebookLang][1]) !== -1) {
+                counterAdsPage++;
                 mutation.target.remove();
             }
         });
@@ -36,3 +38,8 @@ if (adsLabels.hasOwnProperty(facebookLang) === true) {
     });
 }
 
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message == "getCurrentAds") {
+        sendResponse(counterAdsPage);
+    }
+});
