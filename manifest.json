@@ -1,6 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Facebook ads blocker",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
   "version": "0.0.2",
   "author": "leopold.jacquot@gmail.com",
   "content_scripts": [
@@ -10,7 +12,8 @@
     }
   ],
   "browser_action": {
-    "default_title": "Facebook ads blocker"
+    "default_title": "__MSG_appName__",
+    "default_popup": "popup.html"
   },
   "permissions": ["activeTab"]
 }

@@ -1,4 +1,4 @@
-# Facebook ads blocker V0.0.2
+# Facebook ads blocker V0.0.3
 
 Facebook ads blocker is a simple open source plugin to kill sponsored post on Facebook website.
 
