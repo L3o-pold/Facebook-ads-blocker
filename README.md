@@ -1,9 +1,9 @@
-# Facebook ads blocker
+# Facebook ads blocker V0.0.2
 
-Facebook ads blocker is a simple plugin to kill sponsored post on Facebook website.
+Facebook ads blocker is a simple open source plugin to kill sponsored post on Facebook website.
 
 Warning:
-It will only works if your Facebook language is English (USA).
+It will only works if your Facebook language is English and French (https://www.facebook.com/help/327850733950290).
 
 https://chrome.google.com/webstore/detail/facebook-ads-blocker/lmfflnbopbailibmjpepkmgmencpfcak
 
