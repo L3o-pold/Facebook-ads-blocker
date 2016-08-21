@@ -1,14 +1,16 @@
 {
   "manifest_version": 2,
-  "name": "Facebook ADS blocker",
-  "version": "0.1",
+  "name": "Facebook ads blocker",
+  "version": "0.0.2",
   "author": "leopold.jacquot@gmail.com",
-  "content_scripts": [{
-    "matches": ["*://*.facebook.com/*"],
-    "js": ["content.js"]
-  }],
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content.js"]
+    }
+  ],
   "browser_action": {
-    "default_title": "Facebook ADS blocker"
+    "default_title": "Facebook ads blocker"
   },
   "permissions": ["activeTab"]
 }
