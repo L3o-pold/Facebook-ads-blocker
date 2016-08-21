@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "Facebook ads blocker",
+    "description": "Facebook ads blocker"
+  },
+  "appDesc": {
+    "message": "Facebook ads blocker is a simple plugin to kill sponsored post on Facebook website.",
+    "description": "Facebook ads blocker is a simple plugin to kill sponsored post on Facebook website."
+  },
+  "pageAdsTitle": {
+    "message": "Blocked ads",
+    "description": ""
+  },
+  "pageAdsLabel": {
+    "message": "on this page",
+    "description": ""
+  }
+}

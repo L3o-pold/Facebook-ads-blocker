@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "Bloqueur de publicités Facebook",
+    "description": "Bloqueur de publicités Facebook"
+  },
+  "appDesc": {
+    "message": "Permet de supprimer simplement les posts sponsorisés sur Facebook",
+    "description": "Permet de supprimer simplement les posts sponsorisés sur Facebook"
+  },
+  "pageAdsTitle": {
+    "message": "Publicités bloquées",
+    "description": ""
+  },
+  "pageAdsLabel": {
+    "message": "sur cette page",
+    "description": ""
+  }
+}
