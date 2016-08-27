@@ -56,11 +56,24 @@ var counterAdsPage = 0;
  */
 var adsTextContent = [];
 
+/**
+ * The initial Facebook feed posts
+ *
+ * @type {NodeList}
+ */
+var initialPosts = document.querySelectorAll("div[id^='substream_']");
+
+for (var i = 0; i < initialPosts.length; i++) {
+    if (isFacebookAds(initialPosts[i].textContent) === true) {
+        removeFacebookAds(initialPosts[i]);
+    }
+}
+
 if (adsLabels.hasOwnProperty(facebookLang) === true) {
     var observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
-            if (isFacebookAds(mutation) === 2) {
-                removeFacebookAds(mutation);
+            if (isFacebookAds(mutation.target.textContent) === true) {
+                removeFacebookAds(mutation.target);
             }
         });
     });
@@ -75,28 +88,26 @@ if (adsLabels.hasOwnProperty(facebookLang) === true) {
 /**
  * Remove a Facebook sponsored post
  *
- * @param mutation
+ * @param postElement
  */
-function removeFacebookAds(mutation) {
-    mutation.target.remove();
-    adsTextContent.push(mutation.target.textContent);
+function removeFacebookAds(postElement) {
+    postElement.remove();
+    adsTextContent.push(postElement.textContent);
     counterAdsPage++;
 }
 
 /**
  * Check if the post is a Facebook sponsored post
  *
- * @param mutation
- * @returns {int}
+ * @param postContent
+ * @returns {boolean}
  */
-function isFacebookAds(mutation) {
-    var newsTextElement = mutation.target.textContent;
+function isFacebookAds(postContent) {
+    var isAd = adsTextContent.indexOf(postContent) === -1;
+    isAd += postContent.indexOf(adsLabels[facebookLang][0]) !== -1;
+    isAd += postContent.indexOf(adsLabels[facebookLang][1]) !== -1;
 
-    var isAd = adsTextContent.indexOf(newsTextElement) !== -1;
-    isAd += newsTextElement.indexOf(adsLabels[facebookLang][0]) !== -1;
-    isAd += newsTextElement.indexOf(adsLabels[facebookLang][1]) !== -1;
-
-    return parseInt(isAd);
+    return parseInt(isAd) >= 2;
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
