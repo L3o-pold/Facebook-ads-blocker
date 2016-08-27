@@ -100,14 +100,14 @@ function removeFacebookAds(postElement) {
  * Check if the post is a Facebook sponsored post
  *
  * @param postContent
- * @returns {int}
+ * @returns {boolean}
  */
 function isFacebookAds(postContent) {
-    var isAd = adsTextContent.indexOf(postContent) !== -1;
+    var isAd = adsTextContent.indexOf(postContent) === -1;
     isAd += postContent.indexOf(adsLabels[facebookLang][0]) !== -1;
     isAd += postContent.indexOf(adsLabels[facebookLang][1]) !== -1;
 
-    return parseInt(isAd) === 2;
+    return parseInt(isAd) >= 2;
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
