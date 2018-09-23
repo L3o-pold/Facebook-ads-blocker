@@ -19,29 +19,6 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 /**
- * The Facebook sponsored post labels to looking for
- *
- * @type {{en: string[], fr: string[]}}
- */
-var adsLabels = {
-    en: [
-        "Sponsored",
-        "Suggested Post"
-    ],
-    fr: [
-        "Sponsorisé",
-        "Publication suggérée"
-    ]
-};
-
-/**
- * Facebook user language
- *
- * @type {string}
- */
-var facebookLang = document.getElementsByTagName("html")[0].getAttribute("lang");
-
-/**
  * Count the number of Facebook sponsored post on the page
  *
  * @type {number}
@@ -64,26 +41,26 @@ var adsTextContent = [];
 var initialPosts = document.querySelectorAll("div[id^='substream_']");
 
 for (var i = 0; i < initialPosts.length; i++) {
-    if (isFacebookAds(initialPosts[i].textContent) === true) {
+    if (isFacebookAds(initialPosts[i]) === true) {
         removeFacebookAds(initialPosts[i]);
     }
 }
 
-if (adsLabels.hasOwnProperty(facebookLang) === true) {
-    var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            if (isFacebookAds(mutation.target.textContent) === true) {
-                removeFacebookAds(mutation.target);
-            }
-        });
+var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        if (mutation.target.attributes.getNamedItem('id') 
+            && mutation.target.attributes.getNamedItem('id').value.indexOf('hyperfeed_story_id_') !== -1
+            && isFacebookAds(mutation.target) === true) {
+            removeFacebookAds(mutation.target);
+        }
     });
+});
 
-    observer.observe(document.getElementById('stream_pagelet'), {
-        childList: true,
-        subtree: true,
-        attributes: true
-    });
-}
+observer.observe(document.getElementById('stream_pagelet'), {
+    childList: true,
+    subtree: true,
+    attributes: true
+});
 
 /**
  * Remove a Facebook sponsored post
@@ -99,15 +76,21 @@ function removeFacebookAds(postElement) {
 /**
  * Check if the post is a Facebook sponsored post
  *
- * @param postContent
+ * @param Node post
  * @returns {boolean}
  */
-function isFacebookAds(postContent) {
-    var isAd = adsTextContent.indexOf(postContent) === -1;
-    isAd += postContent.indexOf(adsLabels[facebookLang][0]) !== -1;
-    isAd += postContent.indexOf(adsLabels[facebookLang][1]) !== -1;
+function isFacebookAds(post) {
+    var timestamp = post.querySelector(".timestampContent");
 
-    return parseInt(isAd) >= 2;
+    if (!post.textContent.length) {
+        return false;
+    }
+
+    if (timestamp && timestamp.textContent && timestamp.textContent.length > 0 && timestamp.offsetHeight > 0) {
+        return false;
+    }
+
+    return true;
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
